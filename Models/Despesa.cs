@@ -10,6 +10,7 @@ namespace ProjetoDespesas.Models
         public Mes Mes {get; set;}
 
         public int TipoDespesaId {get; set;}
+        public TipoDespesa TipoDespesa {get; set;}
 
         [Required(ErrorMessage="Use menos caracteres.")]
         [Range(0, double.MaxValue, ErrorMessage = "Valor Inválido.")]
