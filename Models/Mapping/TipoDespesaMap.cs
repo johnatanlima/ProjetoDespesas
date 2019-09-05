@@ -7,7 +7,7 @@ namespace ProjetoDespesas.Models.Mapping
     {
         public void Configure(EntityTypeBuilder<TipoDespesa> builder)
         {
-            builder.ToTable("Despesas");
+            builder.ToTable("TipoDespesa");
 
             builder.HasKey(x => x.TipoDespesaId);
             

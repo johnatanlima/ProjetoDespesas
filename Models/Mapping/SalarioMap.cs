@@ -11,7 +11,7 @@ namespace ProjetoDespesas.Models.Mapping
 
             builder.HasKey(x => x.SalarioId);
 
-            builder.Property(x => x.Valor).HasColumnType("decimal(9,2").IsRequired();
+            builder.Property(x => x.Valor).HasColumnType("decimal(9,2)").IsRequired();
             
             builder.HasOne(x => x.Mes).WithOne(x => x.Salario).HasForeignKey<Salario>(x => x.MesId);
         }
