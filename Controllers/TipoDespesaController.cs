@@ -25,6 +25,7 @@ namespace ProjetoDespesas.Controllers
             return View(await _context.TipoDespesas.ToListAsync());
         }
 
+        /*
         // GET: TipoDespesa/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -42,6 +43,7 @@ namespace ProjetoDespesas.Controllers
 
             return View(tipoDespesa);
         }
+        */
 
         // GET: TipoDespesa/Create
         public IActionResult Create()
@@ -58,6 +60,8 @@ namespace ProjetoDespesas.Controllers
         {
             if (ModelState.IsValid)
             {
+                TempData["Confirmacao"] = tipoDespesa.Nome + " foi cadastrado com sucesso"; //
+
                 _context.Add(tipoDespesa);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -97,6 +101,8 @@ namespace ProjetoDespesas.Controllers
             {
                 try
                 {
+                    TempData["Confirmacao"] = tipoDespesa.Nome + " foi atualizado com sucesso"; //
+
                     _context.Update(tipoDespesa);
                     await _context.SaveChangesAsync();
                 }
@@ -115,7 +121,7 @@ namespace ProjetoDespesas.Controllers
             }
             return View(tipoDespesa);
         }
-
+/* 
         // GET: TipoDespesa/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -132,14 +138,17 @@ namespace ProjetoDespesas.Controllers
             }
 
             return View(tipoDespesa);
-        }
+        } */
 
         // POST: TipoDespesa/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var tipoDespesa = await _context.TipoDespesas.FindAsync(id);
+            
+            TempData["Confirmacao"] = tipoDespesa.Nome + " foi excluido com sucesso";
+
             _context.TipoDespesas.Remove(tipoDespesa);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
