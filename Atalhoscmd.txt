@@ -18,6 +18,3 @@
     //Comando para gerar o script de criação de esquemas e tabelas descritas na classe contexto. 
         dotnet ef migrations add 001
     
-    //Criar o banco de dados pelo script gerado acima
-        dotnet ef database update
-    
