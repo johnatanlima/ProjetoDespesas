@@ -16,5 +16,5 @@
 * GERAR BANCO DE DADOS ATRAVÉS DE MIGRATION. 
 
     //Comando para gerar o script de criação de esquemas e tabelas descritas na classe contexto. 
-        dotnet ef migrations add 001
+        dotnet ef migrations add 002
     
