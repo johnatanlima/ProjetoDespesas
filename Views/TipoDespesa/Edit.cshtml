@@ -1,16 +1,15 @@
 @model ProjetoDespesas.Models.TipoDespesa
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Atualizar" + Model.Nome;
 }
 
-<h1>Edit</h1>
-
-<h4>TipoDespesa</h4>
+<div class="formulario">
+<h4>Atualizar o tipo de despesa @Model.Nome</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit form border rounded">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="TipoDespesaId" />
             <div class="form-group">
@@ -18,17 +17,16 @@
                 <input asp-for="Nome" class="form-control" />
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
+            <hr />
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Salvar" class="btn btn-outline-success btn-sm" />
+                <a asp-action="Index" class="btn btn-outline-dark btn-sm">Voltar</a>
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
