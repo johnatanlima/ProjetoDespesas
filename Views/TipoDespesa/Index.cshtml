@@ -7,7 +7,7 @@
 <div class="tabela">
     <div class="container">
         <p class="btnNovo">
-            <a asp-action="Create" class="btn btn-primary btn-sm">Novo Tipo de Despesa</a>
+            <a asp-action="Create" class="btn btn-outline-primary btn-sm">Novo Tipo de Despesa</a>
         </p>
 
         @if (TempData["Confirmacao"] != null)
@@ -33,8 +33,8 @@
                         @Html.DisplayFor(modelItem => item.Nome)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.TipoDespesaId" class="btn btn-info btn-sm"> Atualizar </a> |
-                        <a onclick="ExibirModal(@item.TipoDespesaId, '@item.Nome')" class="btn btn-sm btn-danger"> Excluir </a>
+                        <a asp-action="Edit" asp-route-id="@item.TipoDespesaId" class="btn btn-outline-info btn-sm"> Atualizar </a> |
+                        <a onclick="ExibirModal(@item.TipoDespesaId, '@item.Nome');" class="btn btn-sm btn-outline-danger"> Excluir </a>
                     </td>
                 </tr>
         }
@@ -53,12 +53,36 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Texto do corpo do modal, é aqui.</p>
+        <p> Deseja prosseguir com a exclusão de <text class="nome"> </text></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-primary">Salvar mudanças</button>
+        <button type="button" class="btn btn-outline-primary btnExcluir">Sim</button>
+        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Não</button>
+
       </div>
     </div>
   </div>
 </div>
+
+@section Scripts{
+  <script>
+    function ExibirModal(id, nome){
+      $(".nome")[0].innerHTML = nome;
+
+      $(".modal").modal();
+
+      $(".btnExcluir").on('click', function(){
+        $.ajax({
+          url: "TipoDespesa/Delete",
+          method: "POST",
+          data: {id: id},
+          success: function(data){
+            $(".modal").modal('hide');
+            location.reload(true);
+          }
+        });
+      });
+
+    }
+  </script>
+}
