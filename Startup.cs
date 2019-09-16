@@ -61,7 +61,7 @@ namespace ProjetoDespesas
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=TipoDespesa}/{action=Index}/{id?}");
             });
         }
     }
