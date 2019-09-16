@@ -143,7 +143,7 @@ namespace ProjetoDespesas.Controllers
         // POST: TipoDespesa/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<JsonResult> Delete(int id)
         {
             var tipoDespesa = await _context.TipoDespesas.FindAsync(id);
             
@@ -151,7 +151,7 @@ namespace ProjetoDespesas.Controllers
 
             _context.TipoDespesas.Remove(tipoDespesa);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Json(tipoDespesa.Nome + " excluído com sucesso");
         }
 
         private bool TipoDespesaExists(int id)
