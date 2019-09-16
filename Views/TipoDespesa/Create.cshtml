@@ -1,7 +1,7 @@
 @model ProjetoDespesas.Models.TipoDespesa
 
 @{
-    ViewData["Title"] = "Novos tipos de despesas";
+    ViewData["Title"] = "Novo tipos de despesas";
 }
 
 <div class="formulario">
@@ -20,13 +20,13 @@
                 <hr />
                 <div class="form-group">
                     <input type="submit" value="Salvar" class="btn btn-outline-success btn-sm" />
-                    <a asp-action="Index" class="btn btn-outline-dark btn-sm>Back to List</a>
+                    <a asp-action="Index" class="btn btn-outline-dark btn-sm"> Voltar </a>
                 </div>
             </form>
         </div>
     </div>
-    
 <div>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
