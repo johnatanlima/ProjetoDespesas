@@ -25,6 +25,13 @@ namespace ProjetoDespesas.Controllers
             return View(await _context.TipoDespesas.ToListAsync());
         }
 
+        public async Task<JsonResult> verificaDespesa(string nome){
+            if (await _context.tipoDespesas.AnyAsync(td => td.Nome.ToUpper() == nome.ToUpper()))
+                return Json("Esse tipo de despesa já existe!");
+
+            return Json(true);
+        }
+
         /*
       
         public async Task<IActionResult> Details(int? id)
