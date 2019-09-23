@@ -20,9 +20,23 @@ namespace ProjetoDespesas.Controllers
         }
 
         // GET: TipoDespesa
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             return View(await _context.TipoDespesas.ToListAsync());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(string txtProcurar)
+        {
+            if(!String.IsNullOrEmpty(txtProcurar))
+                return View(
+                    await _context.TipoDespesas.Where(td => td.Nome.ToUpper()
+                        .Contains(txtProcurar.ToUpper())
+                    ).ToListAsync()
+                );
+            
+            return View( await _context.TipoDespesas.ToListAsync());
         }
 
         public async Task<JsonResult> verificaDespesa(string nome){
