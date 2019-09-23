@@ -12,6 +12,7 @@ namespace ProjetoDespesas.Models
         public int TipoDespesaId {get; set;}
         public TipoDespesa TipoDespesa {get; set;}
 
+        [DataType(DataType.Currency)]
         [Required(ErrorMessage="Use menos caracteres.")]
         [Range(0, double.MaxValue, ErrorMessage = "Valor Inválido.")]
         public double Valor {get; set;}

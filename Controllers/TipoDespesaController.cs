@@ -26,7 +26,7 @@ namespace ProjetoDespesas.Controllers
         }
 
         public async Task<JsonResult> verificaDespesa(string nome){
-            if (await _context.tipoDespesas.AnyAsync(td => td.Nome.ToUpper() == nome.ToUpper()))
+            if (await _context.TipoDespesas.AnyAsync(td => td.Nome.ToUpper() == nome.ToUpper()))
                 return Json("Esse tipo de despesa já existe!");
 
             return Json(true);
