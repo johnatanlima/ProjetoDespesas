@@ -1,41 +1,93 @@
 @model IEnumerable<ProjetoDespesas.Models.Salario>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Salarios - Cadastrar";
 }
-
-<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-outline-primary">Criar novo salário</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Mes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Valor)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Mes.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Valor)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.SalarioId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.SalarioId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.SalarioId">Delete</a>
-            </td>
-        </tr>
+
+<div class="tabela">
+    <div class="container">
+        @if(TempData["Confirmacao"] != null)
+        {
+            <h6 class="alert alert-success">
+                @TempData["Confirmacao"]
+            </h6>
+        }
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Mes)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Valor)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+        @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Mes.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Valor)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" class="btn btn-outline-info btn-sm" asp-route-id="@item.SalarioId">Atualizar</a> |
+                        <a onclick="exibirModal(@item.SalarioId)" class="btn btn-outline-danger btn-sm" asp-route-id="@item.SalarioId">Deletar</a>
+                    </td>
+                </tr>
+        }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"> Excluir </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p> Deseja prosseguir com a exclusão do salario?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary btnExcluir">Sim</button>
+        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Não</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts{
+  <script>
+    function ExibirModal(id){
+
+      $(".modal").modal();
+
+      $(".btnExcluir").on('click', function(){
+        $.ajax({
+          url: "Salario/Delete",
+          method: "POST",
+          data: {id: id},
+          success: function(data){
+            $(".modal").modal('hide');
+            location.reload(true);
+          }
+        });
+      });
+
+    }
+  </script>
 }
-    </tbody>
-</table>

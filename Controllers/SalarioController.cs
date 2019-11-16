@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +19,7 @@ namespace ProjetoDespesas.Controllers
 
         // GET: Salario
         public async Task<IActionResult> Index()
-        {
+        {   
             var despesasContexto = _context.Salarios.Include(s => s.Mes);
             return View(await despesasContexto.ToListAsync());
         }
@@ -48,7 +46,7 @@ namespace ProjetoDespesas.Controllers
         // GET: Salario/Create
         public IActionResult Create()
         {
-            ViewData["MesId"] = new SelectList(_context.Meses, "MesId", "Nome");
+            ViewData["MesId"] = new SelectList(_context.Meses.Where(x => x.MesId != x.Salario.MesId), "MesId", "Nome");
             return View();
         }
 
@@ -61,11 +59,12 @@ namespace ProjetoDespesas.Controllers
         {
             if (ModelState.IsValid)
             {
+                TempData["Confirmacao"] = "Salário cadastrado com sucesso";
                 _context.Add(salario);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MesId"] = new SelectList(_context.Meses, "MesId", "Nome", salario.MesId);
+            ViewData["MesId"] = new SelectList(_context.Meses.Where(x => x.MesId != x.Salario.MesId),"MesId", "Nome", salario.MesId);
             return View(salario);
         }
 
@@ -82,7 +81,7 @@ namespace ProjetoDespesas.Controllers
             {
                 return NotFound();
             }
-            ViewData["MesId"] = new SelectList(_context.Meses, "MesId", "Nome", salario.MesId);
+            ViewData["MesId"] = new SelectList(_context.Meses.Where(x => x.MesId == x.Salario.MesId), "MesId", "Nome", salario.MesId);
             return View(salario);
         }
 
@@ -104,6 +103,7 @@ namespace ProjetoDespesas.Controllers
                 {
                     _context.Update(salario);
                     await _context.SaveChangesAsync();
+                    TempData["Confirmacao"] = "Salário atualizado com sucesso";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -118,7 +118,7 @@ namespace ProjetoDespesas.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MesId"] = new SelectList(_context.Meses, "MesId", "Nome", salario.MesId);
+            ViewData["MesId"] = new SelectList(_context.Meses.Where(x => x.MesId == x.Salario.MesId), "MesId", "Nome", salario.MesId);
             return View(salario);
         }
 
@@ -142,9 +142,8 @@ namespace ProjetoDespesas.Controllers
         }
 
         // POST: Salario/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
         {
             var salario = await _context.Salarios.FindAsync(id);
             _context.Salarios.Remove(salario);
