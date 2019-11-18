@@ -1,20 +1,19 @@
 @model ProjetoDespesas.Models.Salario
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar salario";
 }
 
-<h1>Edit</h1>
-
+<div class="formulario">
 <h4>Salario</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form class="form rounded border" asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="SalarioId" />
             <div class="form-group">
-                <label asp-for="MesId" class="control-label"></label>
+                <label asp-for="MesId" class="control-label">Mês</label>
                 <select asp-for="MesId" class="form-control" asp-items="ViewBag.MesId"></select>
                 <span asp-validation-for="MesId" class="text-danger"></span>
             </div>
@@ -24,14 +23,13 @@
                 <span asp-validation-for="Valor" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-success" /> &nbsp;
+                <a class="btn btn-outline-dark btn-sm" asp-action="Index">Back to List</a>
+
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
