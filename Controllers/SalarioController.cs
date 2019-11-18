@@ -18,11 +18,27 @@ namespace ProjetoDespesas.Controllers
         }
 
         // GET: Salario
+        [HttpGet]
         public async Task<IActionResult> Index()
         {   
             var despesasContexto = _context.Salarios.Include(s => s.Mes);
             return View(await despesasContexto.ToListAsync());
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(string txtProcurar)
+        {
+            if(!string.IsNullOrEmpty(txtProcurar))
+            {
+                return View(await _context.Salarios
+                    .Include(x => x.Mes)
+                        .Where(m => m.Mes.Nome.ToUpper()
+                            .Contains(txtProcurar.ToUpper()))
+                                .ToListAsync()
+               );
+            }
+            return View(await _context.Salarios.Include(s => s.Mes).ToListAsync());
+        } 
 
         // GET: Salario/Details/5
         public async Task<IActionResult> Details(int? id)
